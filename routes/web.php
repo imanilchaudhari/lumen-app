@@ -27,6 +27,7 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->put('users/{id}', ['uses' => '\App\Http\Controllers\UsersController@update']);
 
     $router->get('posts', ['uses' => '\App\Http\Controllers\PostsController@index']);
+    $router->post('posts', ['uses' => '\App\Http\Controllers\PostsController@create']);
     $router->get('posts/{id}', ['uses' => '\App\Http\Controllers\PostsController@view']);
     $router->put('posts/{id}', ['uses' => '\App\Http\Controllers\PostsController@update']);
     $router->delete('posts/{id}', ['uses' => '\App\Http\Controllers\PostsController@delete']);

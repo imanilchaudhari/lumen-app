@@ -31,6 +31,28 @@ class PostsController extends Controller
     }
 
     /**
+     * Create current post
+     */
+    public function create(Request $request)
+    {
+        $token = $request->bearerToken();
+        $values = $request->json()->all();
+
+        $model = new Post();
+        $model->fill($values);
+        $model->created_by = auth()->user()->id;
+        $model->updated_by = auth()->user()->id;
+        $model->created_at = date('Y-m-d H:i:s');
+        $model->updated_at = date('Y-m-d H:i:s');
+        $model->save();
+
+        return response()->json([
+            'token' => $token,
+            'data' => $model
+        ]);
+    }
+
+    /**
      * Get current post
      */
     public function view(Request $request, $id)
