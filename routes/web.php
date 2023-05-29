@@ -23,4 +23,6 @@ $router->get('/key', function() {
 
 $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->get('users', ['uses' => '\App\Http\Controllers\UsersController@index']);
+    $router->get('users/{id}', ['uses' => '\App\Http\Controllers\UsersController@view']);
+    $router->put('users/{id}', ['uses' => '\App\Http\Controllers\UsersController@update']);
 });

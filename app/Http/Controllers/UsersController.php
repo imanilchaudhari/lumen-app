@@ -20,13 +20,46 @@ class UsersController extends Controller
     /**
      * Get list of users
      */
-    public function index(Request $request) 
+    public function index(Request $request)
     {
-        $token = $request->bearerToken();   
+        $token = $request->bearerToken();
 
         return response()->json([
             'token' => $token,
             'data' => User::all()
+        ]);
+    }
+
+    /**
+     * Get current user
+     */
+    public function view(Request $request, $id)
+    {
+        $token = $request->bearerToken();
+        $model = User::find($id);
+
+        return response()->json([
+            'token' => $token,
+            'data' => $model
+        ]);
+    }
+
+    /**
+     * Update current user
+     */
+    public function update(Request $request, $id)
+    {
+        $token = $request->bearerToken();
+        $values = $request->json()->all();
+
+        $model = User::find($id);
+        $this->authorize('update', $model);
+
+        $model->update($values);
+
+        return response()->json([
+            'token' => $token,
+            'data' => $model
         ]);
     }
 }
