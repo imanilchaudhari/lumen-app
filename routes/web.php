@@ -21,6 +21,8 @@ $router->get('/key', function() {
     return \Illuminate\Support\Str::random(32);
 });
 
+$router->post('login', ['uses' => '\App\Http\Controllers\AuthController@login']);
+
 $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->get('users', ['uses' => '\App\Http\Controllers\UsersController@index']);
     $router->get('users/{id}', ['uses' => '\App\Http\Controllers\UsersController@view']);
