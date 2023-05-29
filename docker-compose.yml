@@ -1,0 +1,39 @@
+version: '3'
+services:
+  webapp:
+    build:
+      context: docker
+      dockerfile: Dockerfile
+    container_name: "api_webapp"
+    restart: 'no'
+    ports:
+      - '8088:80'
+    volumes:
+      - './:/var/www/'
+      - './docker/php/php.ini:/etc/php/7.4/apache2/php.ini'
+      - './docker/php/php.ini:/etc/php/7.4/cli/php.ini'
+    links:
+      - mariadb
+      - mailhog
+  mariadb:
+    image: 'mariadb:10.3.28'
+    container_name: "api_mariadb"
+    restart: 'no'
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: 'database'
+  adminer:
+    image: adminer
+    container_name: "api_adminer"
+    restart: 'no'
+    links:
+      - mariadb
+    ports:
+      - '8089:8080'
+  mailhog:
+    image: mailhog/mailhog
+    container_name: "api_mailhog"
+    restart: 'no'
+    ports:
+      - '1025:1025'
+      - '8025:8025'
