@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Classes\DataProvider;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -22,12 +23,10 @@ class PostsController extends Controller
      */
     public function index(Request $request)
     {
-        $token = $request->bearerToken();
+        $paginator = Post::paginate();
+        $provider = new DataProvider($paginator);
 
-        return response()->json([
-            'token' => $token,
-            'data' => Post::paginate()
-        ]);
+        return $provider->toResponse();
     }
 
     /**

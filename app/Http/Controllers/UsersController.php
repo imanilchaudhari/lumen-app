@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Classes\DataProvider;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -22,12 +23,10 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        $token = $request->bearerToken();
+        $paginator = User::paginate();
+        $provider = new DataProvider($paginator);
 
-        return response()->json([
-            'token' => $token,
-            'data' => User::paginate()
-        ]);
+        return $provider->toResponse();
     }
 
     /**
