@@ -4,6 +4,7 @@ namespace App\Classes;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\URL;
 
 class DataProvider extends LengthAwarePaginator
 {
@@ -36,10 +37,10 @@ class DataProvider extends LengthAwarePaginator
 	public function getHeaders()
 	{
 		$links = [
-			'current' => $this->url($this->currentPage()),
-			'last' => $this->url($this->lastPage()),
-			'next' => $this->nextPageUrl(),
-			'prev' => $this->previousPageUrl(),
+			'self' => URL::current() . $this->url($this->currentPage()),
+			'last' => URL::current() . $this->url($this->lastPage()),
+			'prev' => URL::current() . $this->previousPageUrl(),
+			'next' => URL::current() . $this->nextPageUrl(),
 		];
 
 		$headers = [];
