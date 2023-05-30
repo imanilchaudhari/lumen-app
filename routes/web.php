@@ -21,7 +21,12 @@ $router->get('/key', function() {
     return \Illuminate\Support\Str::random(32);
 });
 
-$router->post('login', ['uses' => '\App\Http\Controllers\AuthController@login']);
+$router->group(['prefix' => 'auth'], function () use ($router) {
+    $router->post('login', ['uses' => '\App\Http\Controllers\AuthController@login']);
+    $router->post('logout', ['uses' => '\App\Http\Controllers\AuthController@logout']);
+    $router->post('refresh', ['uses' => '\App\Http\Controllers\AuthController@refresh']);
+    $router->post('profile', ['uses' => '\App\Http\Controllers\AuthController@profile']);
+});
 
 $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->get('users', ['uses' => '\App\Http\Controllers\UsersController@index']);
