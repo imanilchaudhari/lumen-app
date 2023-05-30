@@ -26,7 +26,7 @@ class UsersController extends Controller
 
         return response()->json([
             'token' => $token,
-            'data' => User::all()
+            'data' => User::paginate()
         ]);
     }
 

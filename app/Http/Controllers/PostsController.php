@@ -26,7 +26,7 @@ class PostsController extends Controller
 
         return response()->json([
             'token' => $token,
-            'data' => Post::all()
+            'data' => Post::paginate()
         ]);
     }
 
